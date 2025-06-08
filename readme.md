@@ -34,7 +34,7 @@ Pada era digital ini, pemahaman tentang kepribadian individu sangat penting, bai
 
 ## Data Understanding
 
-Dataset yang digunakan diambil dari Kaggle, berisi data survei perilaku sosial seperti durasi interaksi sosial, kenyamanan dalam keramaian, ukuran lingkaran pertemanan, dan lainnya. Link: [Kaggle - Personality Prediction Dataset](https://www.kaggle.com/datasets/surajkum1198/social-personality)
+Dataset yang digunakan diambil dari Kaggle, berisi data survei perilaku sosial seperti durasi interaksi sosial, kenyamanan dalam keramaian, ukuran lingkaran pertemanan, dan lainnya. Link: [Extrovert vs. Introvert Behavior Data](https://www.kaggle.com/datasets/rakeshkapilavai/extrovert-vs-introvert-behavior-data)
 
 ### Fitur dalam dataset:
 
