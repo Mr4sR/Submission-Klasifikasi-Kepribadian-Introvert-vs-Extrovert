@@ -34,23 +34,54 @@ Pada era digital ini, pemahaman tentang kepribadian individu sangat penting, bai
 
 ## Data Understanding
 
-Dataset yang digunakan diambil dari Kaggle, berisi data survei perilaku sosial seperti durasi interaksi sosial, kenyamanan dalam keramaian, ukuran lingkaran pertemanan, dan lainnya. Link: [Extrovert vs. Introvert Behavior Data](https://www.kaggle.com/datasets/rakeshkapilavai/extrovert-vs-introvert-behavior-data)
+Dataset yang digunakan diambil dari Kaggle, berisi data survei perilaku sosial. Link: [Extrovert vs. Introvert Behavior Data](https://www.kaggle.com/datasets/rakeshkapilavai/extrovert-vs-introvert-behavior-data)
+
+### Jumlah Baris dan Kolom
+
+Dataset awal terdiri dari **2.900 baris** dan **8 kolom**.
+
+### Kondisi Data Awal
+
+Sebelum dilakukan data preparation, berikut jumlah missing values pada setiap kolom:
+
+- Time_spent_Alone: 63
+- Stage_fear: 73
+- Social_event_attendance: 62
+- Going_outside: 66
+- Drained_after_socializing: 52
+- Friends_circle_size: 77
+- Post_frequency: 65
+- Personality: 0
 
 ### Fitur dalam dataset:
 
-* `Time_spent_Alone`: waktu yang dihabiskan sendirian.
-* `Social_event_attendance`: frekuensi menghadiri acara sosial.
-* `Stage_fear`: ketakutan berbicara di depan umum (ya/tidak).
-* `Drained_after_socializing`: merasa lelah setelah bersosialisasi (ya/tidak).
-* `Friends_circle_size`: ukuran lingkaran pertemanan.
-* `Personality`: target klasifikasi (0 = introvert, 1 = ekstrovert)
+* `Time_spent_Alone`: Waktu yang dihabiskan sendirian (numerik).
+* `Social_event_attendance`: Frekuensi menghadiri acara sosial (numerik).
+* `Going_outside`: Frekuensi keluar rumah untuk aktivitas di luar (numerik).
+* `Post_frequency`: Frekuensi posting di media sosial (numerik).
+* `Stage_fear`: Ketakutan berbicara di depan umum (kategorikal: ya/tidak).
+* `Drained_after_socializing`: Merasa lelah setelah bersosialisasi (kategorikal: ya/tidak).
+* `Friends_circle_size`: Ukuran lingkaran pertemanan (numerik).
+* `Personality`: Target klasifikasi (0 = introvert, 1 = ekstrovert).
 
 ## Data Preparation
 
-* **Imputasi**: missing values diisi dengan median (untuk numerik) dan modus (untuk kategorikal).
-* **Encoding**: variabel kategorikal diencoding dengan `LabelEncoder`.
-* **Scaling**: fitur numerik diskalakan menggunakan `StandardScaler`.
-* **Split Data**: dataset dibagi 80:20 untuk pelatihan dan pengujian.
+Tahapan data preparation yang dilakukan:
+
+1. **Cek dan Tangani Missing Values**
+   - Cek jumlah missing values pada setiap kolom.
+   - Imputasi kolom numerik (`Time_spent_Alone`, `Social_event_attendance`, `Going_outside`, `Friends_circle_size`, `Post_frequency`) dengan median.
+   - Imputasi kolom kategorikal (`Stage_fear`, `Drained_after_socializing`, `Personality`) dengan modus.
+2. **Encoding**
+   - Label Encoding pada kolom kategorikal (`Stage_fear`, `Drained_after_socializing`, `Personality`).
+3. **Pisahkan Fitur dan Target**
+   - Fitur disimpan di variabel features, target di variabel target.
+4. **Imputasi Ulang dengan SimpleImputer (mean)**
+   - Setelah pemisahan fitur, dilakukan imputasi ulang pada fitur numerik menggunakan `SimpleImputer(strategy='mean')` untuk memastikan tidak ada missing value.
+5. **Scaling**
+   - Fitur numerik diskalakan menggunakan `StandardScaler`.
+6. **Split Data**
+   - Dataset dibagi 80:20 untuk pelatihan dan pengujian.
 
 ## Modeling
 
@@ -60,13 +91,22 @@ Dua model digunakan:
 
 * Model linier sederhana untuk klasifikasi.
 * Cepat dan efisien pada dataset kecil/menengah.
+* **Parameter utama:**
+    - random_state=42
+    - C=1.0 (default)
+    - solver='lbfgs' (default)
+    - max_iter=100 (default)
 
 ### Random Forest Classifier
 
 * Algoritma ensemble berbasis pohon keputusan.
 * Memiliki kemampuan menangani non-linearitas dan fitur penting.
-
-**Parameter**: digunakan default parameter dari `scikit-learn`, tanpa tuning.
+* **Parameter utama:**
+    - random_state=42
+    - n_estimators=100 (default)
+    - max_depth=None (default)
+    - min_samples_split=2 (default)
+    - min_samples_leaf=1 (default)
 
 ## Evaluation
 
